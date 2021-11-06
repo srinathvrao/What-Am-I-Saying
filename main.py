@@ -26,7 +26,7 @@ for gname in gnames:
 
 results = []
 
-gnames = os.listdir("test")
+gnames = os.listdir("test/")
 for gname in gnames:
 	path = os.path.join("test",gname)
 	frame = frameExtractor(path)
@@ -40,13 +40,8 @@ for gname in gnames:
 			mindist = cosdist
 			mindisti = cc
 		cc+=1
-	# t_vect = torch.from_numpy(np.array(fvect)).unsqueeze(0).double().cuda()
-	# pop = fc(t_vect).argmax(1)
-	# print(gname, pop[0].item())
-	# results.append([ pop[0].item() ])
 	results.append([ outputs[mindisti] ])
-	print(gname, outputs[mindisti])
-	# results.append([ svc.predict([fvect])[0] ])
+	
 filename = "results.csv"
 with open(filename, 'w') as csvfile: 
 	csvwriter = csv.writer(csvfile)
