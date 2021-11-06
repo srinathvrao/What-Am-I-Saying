@@ -20,12 +20,10 @@ gnames = sorted(os.listdir("traindata"))
 c=0
 for gname in gnames:
 	path = "traindata/"+gname
-	# gn = gname.split("-")
-	# gn = gn[-1][:-4]
-
 	frames = frameExtractor(path)
 	fvect=[]
 	for frame in frames:
+		frame = cv2.ROTATE_90_CLOCKWISE(frame, cv2.ROTATE_90_CLOCKWISE)
 		fvect.extend(extractor.extract_feature(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))[0])
 	outputs.append(c)
 	c+=1
@@ -33,31 +31,7 @@ for gname in gnames:
 
 middle_frames = np.array(middle_frames)
 outputs = np.array(outputs)
-'''
-fc = nn.Sequential(
-	nn.Linear(135,17),
-	nn.Softmax(dim=1)
-).double().cuda()
-import torch.optim as optim
-optimizer = optim.Adam(fc.parameters(),lr=1e-4)
-celoss = nn.CrossEntropyLoss()
-for param in fc.parameters():
-	param.requires_grad = True
-print(middle_frames.shape,outputs.shape)
-for ep in range(20):
-	# if ep%100==0:
-	print("epoch",ep+1)
-	for i in range(0,102,25):
-		ft = torch.from_numpy(middle_frames[i:i+25]).cuda()
-		top = torch.from_numpy(outputs[i:i+25]).cuda()
-		pop = fc(ft)
-		loss = celoss(pop,top)
-		# avgloss += loss.item()
-		optimizer.zero_grad()
-		loss.backward()
-		optimizer.step()
-	# print(avgloss/3)
-'''
+
 results = []
 
 gnames = os.listdir("test")
@@ -66,7 +40,7 @@ for gname in gnames:
 	frames = frameExtractor(path)
 	fvect = []
 	for frame in frames:
-		# frame = cv2.ROTATE_90_CLOCKWISE(frame, cv2.ROTATE_90_CLOCKWISE)
+		frame = cv2.ROTATE_90_CLOCKWISE(frame, cv2.ROTATE_90_CLOCKWISE)
 		fv = extractor.extract_feature(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))[0]
 		# fvect.append(np.array(fv).argmax(0))
 		fvect.extend(fv)
