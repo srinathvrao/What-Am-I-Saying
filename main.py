@@ -8,7 +8,7 @@ import cv2
 import numpy as np
 import os
 import tensorflow as tf
-
+from sklearn.svm import SVC
 import os
 import handshape_feature_extractor 
 from handshape_feature_extractor import HandShapeFeatureExtractor
@@ -28,7 +28,7 @@ extractor = HandShapeFeatureExtractor().get_instance()
 # your code goes here
 # Extract the middle frame of each gesture video
 
-
+outputs = []
 gnames = sorted(os.listdir("traindata/"))
 c=0
 for gname in gnames:
@@ -39,9 +39,11 @@ for gname in gnames:
 	frame = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 	fvect = extractor.extract_feature(frame).squeeze()
 	middle_frames.append(fvect)
+	outputs.append(c)
 	c+=1
 results = []
-
+svc = SVC(gamma='scale')
+svc.fit(middle_frames,outputs)
 # =============================================================================
 # Get the penultimate layer for test data
 # =============================================================================
@@ -57,16 +59,16 @@ for gname in gnames:
 	img = cv2.imread(impath)
 	frame = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 	fvect = extractor.extract_feature(frame).squeeze()
-	cc=0
-	mindisti, mindist = 0,1e8
-	for v in middle_frames:
-		cosdist = spatial.distance.cosine(fvect,v)
-		if cosdist<mindist:
-			mindist = cosdist
-			mindisti = cc
-		cc+=1
-	print(gname, mindisti)
-	results.append([ mindisti ])
+	# cc=0
+	# mindisti, mindist = 0,1e8
+	# for v in middle_frames:
+	# 	cosdist = spatial.distance.cosine(fvect,v)
+	# 	if cosdist<mindist:
+	# 		mindist = cosdist
+	# 		mindisti = cc
+	# 	cc+=1
+	# print(gname, mindisti)
+	results.append([ svc.predict([fvect])[0] ])
 	c+=1
 
 
