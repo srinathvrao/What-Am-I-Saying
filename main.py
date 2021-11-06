@@ -17,11 +17,9 @@ gnames = sorted(os.listdir("traindata/"))
 c=0
 for gname in gnames:
 	path = os.path.join("traindata",gname)
-	frames = frameExtractor(path)
-	fvect=[]
-	for frame in frames:
-		frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-		fvect.extend(extractor.extract_feature(frame)[0])
+	frame = frameExtractor(path)
+	frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+	fvect = extractor.extract_feature(frame)[0]
 	middle_frames.append(np.array(fvect))
 	outputs.append(c)
 	c+=1
@@ -31,11 +29,9 @@ results = []
 gnames = os.listdir("test")
 for gname in gnames:
 	path = os.path.join("test",gname)
-	frames = frameExtractor(path)
-	fvect = []
-	for frame in frames:
-		frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-		fvect.extend(extractor.extract_feature(frame)[0])
+	frame = frameExtractor(path)
+	frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+	fvect = extractor.extract_feature(frame)[0]
 	cc=0
 	mindisti, mindist = 0,1000
 	for v in middle_frames:

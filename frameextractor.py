@@ -24,7 +24,7 @@ def frameExtractor(videopath):
     frame_no= int(video_length/2.2)
     cap.set(1,frame_no)
     ret,frame0 =cap.read()
-    frames.append(frame0)
+    # frames.append(frame0)
     # for i in range(5):
     #     fn = 2.5 - i*0.2
     #     frame_no= int(video_length/fn)
@@ -32,4 +32,4 @@ def frameExtractor(videopath):
     #     ret,frame0 =cap.read()
     #     frames2.append(frame0)
     #print("Extracting frame..\n")
-    return frames
+    return frame0
