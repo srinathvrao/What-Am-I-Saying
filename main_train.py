@@ -30,7 +30,7 @@ test_middle_frames = []
 test_outputs = []
 
 extractor = HandShapeFeatureExtractor()
-print(extractor.model.summary())
+# print(extractor.model.summary())
 
 gnames = os.listdir("traindata")
 for gname in gnames:
@@ -43,12 +43,18 @@ for gname in gnames:
 		frames = frameExtractor(path)
 		fvect=[]
 		for frame in frames:
+			frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
+			# img_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+			# img_blur = cv2.GaussianBlur(img_gray, (3,3), 0)
+			# edges = cv2.Canny(image=img_blur, threshold1=50, threshold2=200)
+			# cv2.imshow("frame",cv2.resize(img_gray,(256,256),interpolation=cv2.INTER_AREA))
+			# cv2.waitKey(1)
 			fv = extractor.extract_feature(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))[0]
 			# fvect.append(np.array(fv).argmax(0))
 			fvect.extend(fv)
-		middle_frames.append(np.array(fvect))
 		outputs.append([gestID[gname]])
-		print(len(frames))
+		middle_frames.append(np.array(fvect))
+		print(len(frames), len(fvect))
 	# print("=====")
 
 middle_frames = np.array(middle_frames)
