@@ -15,7 +15,6 @@ extractor = HandShapeFeatureExtractor().get_instance()
 # =============================================================================
 
 trainingDataCSV = "trainingData.csv"
-testingDataCSV = "testingData.csv"
 
 '''
 
@@ -42,9 +41,9 @@ np.savetxt(trainingDataCSV,train_middle_penult,delimiter=",")
 
 test_middle_penult = []
 gnames = glob.glob("test/*.mp4")
+testingDataCSV = "testingData.csv"
 c=0
 for path in gnames:
-	print(path)
 	frameExtractor(path,"testframes",c)
 	img = cv2.imread("testframes" + "/%#05d.png" % (c+1))
 	frame = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -66,16 +65,14 @@ if len(testData.shape)==1:
 result = []
 indices = []
 
-def calcGestNum(trainv, testv):
-	cossimlist = []
-	for trv in trainv:
-		cossimlist.append(spatial.distance.cosine(testv, trv))
-	return cossimlist.index(min(cossimlist))
-
 for test in testData:
-	vidin = calcGestNum(trainingData,test)
-	result.append(int(vidin))
-filename = "results.csv"
+	cossimlist = []
+	for trv in trainingData:
+		cossimlist.append(spatial.distance.cosine(test, trv))
+	print(cossimlist.index(min(cossimlist)))
+	result.append(int(cossimlist.index(min(cossimlist))))
+
+filename = "Results.csv"
 np.savetxt(filename,result,delimiter=",",fmt="% d")
 # with open(filename, 'w') as csvfile: 
 # 	csvwriter = csv.writer(csvfile)
