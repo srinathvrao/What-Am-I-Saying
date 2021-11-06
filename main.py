@@ -29,7 +29,7 @@ c=0
 for gname in gnames:
 	path = os.path.join("test",gname)
 	frameExtractor(path,"testframes",c)
-	img = cv2.imread("trainframes" + "/%#05d.png" % (c+1))
+	img = cv2.imread("testframes" + "/%#05d.png" % (c+1))
 	frame = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 	fvect = extractor.extract_feature(frame).squeeze()
 	cc=0
