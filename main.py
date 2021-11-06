@@ -8,9 +8,6 @@ from scipy import spatial
 import csv
 from csv import reader
 
-import torch
-import torch.nn as nn
-
 middle_frames = []
 extractor = HandShapeFeatureExtractor()
 
@@ -23,7 +20,6 @@ for gname in gnames:
 	frames = frameExtractor(path)
 	fvect=[]
 	for frame in frames:
-		frame = cv2.ROTATE_90_CLOCKWISE(frame, cv2.ROTATE_90_CLOCKWISE)
 		fvect.extend(extractor.extract_feature(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))[0])
 	outputs.append(c)
 	c+=1
