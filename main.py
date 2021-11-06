@@ -23,9 +23,7 @@ for gname in gnames:
 	middle_frames.append(fvect)
 	outputs.append(c)
 	c+=1
-
 results = []
-
 gnames = os.listdir("test/")
 for gname in gnames:
 	path = os.path.join("test",gname)
@@ -33,7 +31,7 @@ for gname in gnames:
 	frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 	fvect = extractor.extract_feature(frame).squeeze()
 	cc=0
-	mindisti, mindist = 0,1000
+	mindisti, mindist = 0,1e8
 	for v in middle_frames:
 		cosdist = spatial.distance.cosine(fvect,v)
 		if cosdist<mindist:
