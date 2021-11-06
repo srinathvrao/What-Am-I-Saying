@@ -11,26 +11,25 @@ from csv import reader
 middle_frames = []
 extractor = HandShapeFeatureExtractor().get_instance()
 
-middle_frames = []
-# outputs = []
 gnames = sorted(os.listdir("traindata/"))
 c=0
 for gname in gnames:
+	print(gname)
 	path = os.path.join("traindata",gname)
-	impath = frameExtractor(path,"trainframes")
-	img = cv2.imread(impath)
+	frameExtractor(path,"trainframes",c)
+	img = cv2.imread("trainframes" + "/%#05d.png" % (c+1))
 	frame = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 	fvect = extractor.extract_feature(frame).squeeze()
 	middle_frames.append(fvect)
-	# outputs.append(c)
 	c+=1
 results = []
 
 gnames = os.listdir("test/")
+c=0
 for gname in gnames:
 	path = os.path.join("test",gname)
-	impath = frameExtractor(path,"testframes")
-	img = cv2.imread(impath)
+	frameExtractor(path,"testframes",c)
+	img = cv2.imread("trainframes" + "/%#05d.png" % (c+1))
 	frame = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 	fvect = extractor.extract_feature(frame).squeeze()
 	cc=0
@@ -43,6 +42,7 @@ for gname in gnames:
 		cc+=1
 	print(gname, mindisti)
 	results.append([ mindisti ])
+	c+=1
 
 filename = "results.csv"
 with open(filename, 'w') as csvfile: 

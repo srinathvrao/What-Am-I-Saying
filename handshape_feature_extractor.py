@@ -26,11 +26,8 @@ class HandShapeFeatureExtractor:
     def __init__(self):
         if HandShapeFeatureExtractor.__single is None:
             real_model = load_model(os.path.join(BASE, 'cnn_model.h5'))
-            # real_model = keras.Model(inputs=real_model.input,
-            #                            outputs=real_model.get_layer("dense").output)
             self.model = real_model
             HandShapeFeatureExtractor.__single = self
-
         else:
             raise Exception("This Class bears the model, so it is made Singleton")
 
