@@ -16,22 +16,23 @@ extractor = HandShapeFeatureExtractor()
 
 middle_frames = []
 outputs = []
-gnames = os.listdir("traindata")
+gnames = sorted(os.listdir("traindata"))
 c=0
 for gname in gnames:
 	path = "traindata/"+gname
+	# gn = gname.split("-")
+	# gn = gn[-1][:-4]
+
 	frames = frameExtractor(path)
 	fvect=[]
 	for frame in frames:
-		fv = extractor.extract_feature(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))[0]
-		fvect.extend(fv)
+		fvect.extend(extractor.extract_feature(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))[0])
 	outputs.append(c)
 	c+=1
 	middle_frames.append(np.array(fvect))
 
 middle_frames = np.array(middle_frames)
 outputs = np.array(outputs)
-
 '''
 fc = nn.Sequential(
 	nn.Linear(135,17),
