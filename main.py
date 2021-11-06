@@ -10,7 +10,7 @@ from csv import reader
 
 middle_frames = []
 extractor = HandShapeFeatureExtractor().get_instance()
-print(extractor.model.summary())
+
 middle_frames = []
 outputs = []
 gnames = sorted(os.listdir("traindata/"))
@@ -22,9 +22,9 @@ for gname in gnames:
 	fvect = extractor.extract_feature(frame).squeeze()
 	middle_frames.append(fvect)
 	outputs.append(c)
-	print(len(fvect),c)
 	c+=1
 results = []
+
 gnames = os.listdir("test/")
 for gname in gnames:
 	path = os.path.join("test",gname)
@@ -39,8 +39,8 @@ for gname in gnames:
 			mindist = cosdist
 			mindisti = cc
 		cc+=1
-	print(gname, outputs[mindisti])
-	results.append([ outputs[mindisti] ])
+	print(gname, mindisti)
+	results.append([ mindisti ])
 
 filename = "results.csv"
 with open(filename, 'w') as csvfile: 

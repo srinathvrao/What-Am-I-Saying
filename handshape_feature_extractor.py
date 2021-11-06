@@ -25,9 +25,9 @@ class HandShapeFeatureExtractor:
 
     def __init__(self):
         if HandShapeFeatureExtractor.__single is None:
-            real_model = load_model(os.path.join(BASE, 'hand_model.hdf5'))
-            real_model = keras.Model(inputs=real_model.input,
-                                       outputs=real_model.get_layer("activation_4").output)
+            real_model = load_model(os.path.join(BASE, 'cnn_model.h5'))
+            # real_model = keras.Model(inputs=real_model.input,
+            #                            outputs=real_model.get_layer("dense").output)
             self.model = real_model
             HandShapeFeatureExtractor.__single = self
 
@@ -38,9 +38,9 @@ class HandShapeFeatureExtractor:
     @staticmethod
     def __pre_process_input_image(crop):
         try:
-            img = cv2.resize(crop, (54, 54))
+            img = cv2.resize(crop, (200, 200))
             img_arr = np.array(img) / 255.0
-            img_arr = img_arr.reshape(1, 54, 54, 1)
+            img_arr = img_arr.reshape(1, 200, 200, 1)
             return img_arr
         except Exception as e:
             print(str(e))
