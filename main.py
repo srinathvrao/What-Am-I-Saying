@@ -13,20 +13,18 @@ extractor = HandShapeFeatureExtractor()
 
 middle_frames = []
 outputs = []
-gnames = sorted(os.listdir("traindata"))
+gnames = sorted(os.listdir("traindata/"))
 c=0
 for gname in gnames:
-	path = "traindata/"+gname
+	path = os.path.join("traindata",gname)
 	frames = frameExtractor(path)
 	fvect=[]
 	for frame in frames:
-		fvect.extend(extractor.extract_feature(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))[0])
+		frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+		fvect.extend(extractor.extract_feature(frame)[0])
+	middle_frames.append(np.array(fvect))
 	outputs.append(c)
 	c+=1
-	middle_frames.append(np.array(fvect))
-
-middle_frames = np.array(middle_frames)
-outputs = np.array(outputs)
 
 results = []
 
@@ -36,12 +34,8 @@ for gname in gnames:
 	frames = frameExtractor(path)
 	fvect = []
 	for frame in frames:
-		frame = cv2.ROTATE_90_CLOCKWISE(frame, cv2.ROTATE_90_CLOCKWISE)
-		fv = extractor.extract_feature(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))[0]
-		# fvect.append(np.array(fv).argmax(0))
-		fvect.extend(fv)
-	# for frame in frames:
-	# 	fvect.extend(extractor.extract_feature(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))[0])
+		frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+		fvect.extend(extractor.extract_feature(frame)[0])
 	cc=0
 	mindisti, mindist = 0,1000
 	for v in middle_frames:
@@ -55,7 +49,7 @@ for gname in gnames:
 	# print(gname, pop[0].item())
 	# results.append([ pop[0].item() ])
 	results.append([ outputs[mindisti] ])
-	# print(gname, outputs[mindisti])
+	print(gname, outputs[mindisti])
 	# results.append([ svc.predict([fvect])[0] ])
 filename = "results.csv"
 with open(filename, 'w') as csvfile: 
