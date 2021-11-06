@@ -14,19 +14,22 @@ import torch.nn as nn
 middle_frames = []
 extractor = HandShapeFeatureExtractor()
 
-with open('train_frames.csv', 'r') as read_obj:
-	csv_reader = reader(read_obj)
-	for row in csv_reader:
-		row = np.array([float(x) for x in row])
-		middle_frames.append(row)
-middle_frames = np.array(middle_frames)
-
-
+middle_frames = []
 outputs = []
-with open('train_outputs.csv', 'r') as read_obj:
-	csv_reader = reader(read_obj)
-	for row in csv_reader:
-		outputs.append(int(row[0]))
+gnames = os.listdir("traindata")
+c=0
+for gname in gnames:
+	path = "traindata/"+gname
+	frames = frameExtractor(path)
+	fvect=[]
+	for frame in frames:
+		fv = extractor.extract_feature(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))[0]
+		fvect.extend(fv)
+	outputs.append(c)
+	c+=1
+	middle_frames.append(np.array(fvect))
+
+middle_frames = np.array(middle_frames)
 outputs = np.array(outputs)
 
 '''
@@ -62,7 +65,7 @@ for gname in gnames:
 	frames = frameExtractor(path)
 	fvect = []
 	for frame in frames:
-		frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
+		# frame = cv2.ROTATE_90_CLOCKWISE(frame, cv2.ROTATE_90_CLOCKWISE)
 		fv = extractor.extract_feature(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))[0]
 		# fvect.append(np.array(fv).argmax(0))
 		fvect.extend(fv)

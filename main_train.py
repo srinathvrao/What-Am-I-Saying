@@ -43,7 +43,7 @@ for gname in gnames:
 		frames = frameExtractor(path)
 		fvect=[]
 		for frame in frames:
-			frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
+			# frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
 			# img_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 			# img_blur = cv2.GaussianBlur(img_gray, (3,3), 0)
 			# edges = cv2.Canny(image=img_blur, threshold1=50, threshold2=200)
