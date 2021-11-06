@@ -44,12 +44,12 @@ for gname in gnames:
 		fvect=[]
 		for frame in frames:
 			fv = extractor.extract_feature(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))[0]
-			fvect.append(np.array(fv).argmax(0))
-			print(np.array(fv).argmax(0),end=' ')
+			# fvect.append(np.array(fv).argmax(0))
+			fvect.extend(fv)
 		middle_frames.append(np.array(fvect))
 		outputs.append([gestID[gname]])
-		print()
-	print("=====")
+		print(len(frames))
+	# print("=====")
 
 middle_frames = np.array(middle_frames)
 outputs = np.array(outputs)

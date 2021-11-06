@@ -38,7 +38,8 @@ for gname in gnames:
 	fvect = []
 	for frame in frames:
 		fv = extractor.extract_feature(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))[0]
-		fvect.append(np.array(fv).argmax(0))
+		# fvect.append(np.array(fv).argmax(0))
+		fvect.extend(fv)
 	# for frame in frames:
 	# 	fvect.extend(extractor.extract_feature(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))[0])
 	cc=0
@@ -49,7 +50,7 @@ for gname in gnames:
 			mindist = cosdist
 			mindisti = cc
 		cc+=1
-
+	
 	results.append([ outputs[mindisti] ])
 	# results.append([ svc.predict([fvect])[0] ])
 filename = "results.csv"

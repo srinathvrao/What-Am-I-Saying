@@ -18,11 +18,11 @@ def frameExtractor(videopath):
     cap = cv2.VideoCapture(videopath)
     video_length = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) - 1
     frames = []
-    for i in range(15):
-        fn = 2.6 - i*0.1
-        frame_no= int(video_length/fn)
-        cap.set(1,frame_no)
-        ret,frame0 =cap.read()
-        frames.append(frame0)
+    # for i in range(15):
+    #     fn = 2.6 - i*0.1
+    frame_no= int(video_length/2.2)
+    cap.set(1,frame_no)
+    ret,frame0 =cap.read()
+    frames.append(frame0)
     #print("Extracting frame..\n")
     return frames
