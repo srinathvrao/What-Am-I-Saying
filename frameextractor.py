@@ -17,36 +17,12 @@ def frameExtractor(videopath):
     #     os.mkdir(frames_path)
     cap = cv2.VideoCapture(videopath)
     video_length = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) - 1
-    frame_no= int(video_length/2.2)
+    frames = []
+    for i in range(15):
+        fn = 2.6 - i*0.1
+        frame_no= int(video_length/fn)
+        cap.set(1,frame_no)
+        ret,frame0 =cap.read()
+        frames.append(frame0)
     #print("Extracting frame..\n")
-    cap.set(1,frame_no)
-    ret,frame1 =cap.read()
-
-    cap = cv2.VideoCapture(videopath)
-    video_length = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) - 1
-    frame_no= int(video_length/2.1)
-    #print("Extracting frame..\n")
-    cap.set(1,frame_no)
-    ret,frame2 =cap.read()
-
-    cap = cv2.VideoCapture(videopath)
-    video_length = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) - 1
-    frame_no= int(video_length/2)
-    #print("Extracting frame..\n")
-    cap.set(1,frame_no)
-    ret,frame3 =cap.read()
-
-    cap = cv2.VideoCapture(videopath)
-    video_length = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) - 1
-    frame_no= int(video_length/1.9)
-    #print("Extracting frame..\n")
-    cap.set(1,frame_no)
-    ret,frame4 =cap.read()
-
-    cap = cv2.VideoCapture(videopath)
-    video_length = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) - 1
-    frame_no= int(video_length/1.8)
-    #print("Extracting frame..\n")
-    cap.set(1,frame_no)
-    ret,frame5 =cap.read()
-    return [frame1,frame2,frame3,frame4,frame5]
+    return frames
