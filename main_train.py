@@ -41,12 +41,15 @@ for gname in gnames:
 		
 		path = "traindata/"+gname+"/"+gnameid #str(x)+"_Venkobarao.mp4"
 		frames = frameExtractor(path)
+		fvect=[]
 		for frame in frames:
-			fvect=[]
-			fvect.extend(extractor.extract_feature(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))[0])
-			middle_frames.append(np.array(fvect))
-			outputs.append([gestID[gname]])
-		print(len(frames))
+			fv = extractor.extract_feature(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))[0]
+			fvect.append(np.array(fv).argmax(0))
+			print(np.array(fv).argmax(0),end=' ')
+		middle_frames.append(np.array(fvect))
+		outputs.append([gestID[gname]])
+		print()
+	print("=====")
 
 middle_frames = np.array(middle_frames)
 outputs = np.array(outputs)

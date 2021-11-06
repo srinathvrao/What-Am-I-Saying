@@ -35,18 +35,21 @@ gnames = os.listdir("test")
 for gname in gnames:
 	path = os.path.join("test",gname)
 	frames = frameExtractor(path)
-	mindisti, mindist = 0,1000
+	fvect = []
 	for frame in frames:
-		fvect = []
-		fvect.extend(extractor.extract_feature(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))[0])
-		cc=0
-		for v in middle_frames:
-			cosdist = spatial.distance.cosine(fvect,v)
-			if cosdist<mindist:
-				mindist = cosdist
-				mindisti = cc
-			cc+=1
-	
+		fv = extractor.extract_feature(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))[0]
+		fvect.append(np.array(fv).argmax(0))
+	# for frame in frames:
+	# 	fvect.extend(extractor.extract_feature(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))[0])
+	cc=0
+	mindisti, mindist = 0,1000
+	for v in middle_frames:
+		cosdist = spatial.distance.cosine(fvect,v)
+		if cosdist<mindist:
+			mindist = cosdist
+			mindisti = cc
+		cc+=1
+
 	results.append([ outputs[mindisti] ])
 	# results.append([ svc.predict([fvect])[0] ])
 filename = "results.csv"
