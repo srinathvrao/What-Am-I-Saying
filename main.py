@@ -12,24 +12,26 @@ middle_frames = []
 extractor = HandShapeFeatureExtractor().get_instance()
 
 middle_frames = []
-outputs = []
+# outputs = []
 gnames = sorted(os.listdir("traindata/"))
 c=0
 for gname in gnames:
 	path = os.path.join("traindata",gname)
-	frame = frameExtractor(path)
-	frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+	impath = frameExtractor(path,"trainframes")
+	img = cv2.imread(impath)
+	frame = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 	fvect = extractor.extract_feature(frame).squeeze()
 	middle_frames.append(fvect)
-	outputs.append(c)
+	# outputs.append(c)
 	c+=1
 results = []
 
 gnames = os.listdir("test/")
 for gname in gnames:
 	path = os.path.join("test",gname)
-	frame = frameExtractor(path)
-	frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+	impath = frameExtractor(path,"testframes")
+	img = cv2.imread(impath)
+	frame = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 	fvect = extractor.extract_feature(frame).squeeze()
 	cc=0
 	mindisti, mindist = 0,1e8

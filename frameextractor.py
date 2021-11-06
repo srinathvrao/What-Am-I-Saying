@@ -11,25 +11,15 @@ import os
 #videopath : path of the video file
 #frames_path: path of the directory to which the frames are saved
 #count: to assign the video order to the frane.
-# def frameExtractor(videopath,frames_path,count):
-def frameExtractor(videopath):
-    # if not os.path.exists(frames_path):
-    #     os.mkdir(frames_path)
+def frameExtractor(videopath,frames_path):
+    if not os.path.exists(frames_path):
+        os.mkdir(frames_path)
     cap = cv2.VideoCapture(videopath)
     video_length = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) - 1
-    frames = []
-    # frames2 = []
-    # for i in range(5):
-    #     fn = 2.6 - i*0.2
-    frame_no= int(video_length/2.2)
-    cap.set(1,frame_no)
-    ret,frame0 =cap.read()
-    # frames.append(frame0)
-    # for i in range(5):
-    #     fn = 2.5 - i*0.2
-    #     frame_no= int(video_length/fn)
-    #     cap.set(1,frame_no)
-    #     ret,frame0 =cap.read()
-    #     frames2.append(frame0)
+    frame_no= int(video_length/2)
     #print("Extracting frame..\n")
-    return frame0
+    cap.set(1,frame_no)
+    ret,frame=cap.read()
+    print(frames_path, videopath.split("/")[-1][:-4]+".png")
+    cv2.imwrite(frames_path + "/"+videopath.split("/")[-1][:-4]+".png", frame)
+    return frames_path + "/"+videopath.split("/")[-1][:-4]+".png"
