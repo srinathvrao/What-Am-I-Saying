@@ -9,7 +9,7 @@ import csv
 from csv import reader
 
 middle_frames = []
-extractor = HandShapeFeatureExtractor()
+extractor = HandShapeFeatureExtractor().get_instance()
 
 middle_frames = []
 outputs = []
@@ -20,7 +20,7 @@ for gname in gnames:
 	frame = frameExtractor(path)
 	frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 	fvect = extractor.extract_feature(frame)[0]
-	middle_frames.append(np.array(fvect))
+	middle_frames.append(fvect)
 	outputs.append(c)
 	c+=1
 
@@ -40,6 +40,7 @@ for gname in gnames:
 			mindist = cosdist
 			mindisti = cc
 		cc+=1
+	print(gname, outputs[mindisti])
 	results.append([ outputs[mindisti] ])
 	
 filename = "results.csv"
