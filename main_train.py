@@ -38,14 +38,14 @@ for gname in gnames:
 	gnameids = os.listdir("traindata/"+gname)
 	# for x in range(2):
 	for gnameid in gnameids:
-		fvect=[]
+		
 		path = "traindata/"+gname+"/"+gnameid #str(x)+"_Venkobarao.mp4"
 		frames = frameExtractor(path)
 		for frame in frames:
+			fvect=[]
 			fvect.extend(extractor.extract_feature(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))[0])
-		middle_frames.append(np.array(fvect))
-		print(len(fvect))
-		outputs.append([gestID[gname]])
+			middle_frames.append(np.array(fvect))
+			outputs.append([gestID[gname]])
 
 middle_frames = np.array(middle_frames)
 outputs = np.array(outputs)

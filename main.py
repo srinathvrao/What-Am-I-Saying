@@ -8,11 +8,11 @@ from scipy import spatial
 import csv
 from csv import reader
 
+# import torch
+# import torch.nn as nn
+
 middle_frames = []
 extractor = HandShapeFeatureExtractor()
-
-from sklearn.svm import SVC
-svc = SVC(gamma='scale')
 
 with open('train_frames.csv', 'r') as read_obj:
 	csv_reader = reader(read_obj)
@@ -28,26 +28,27 @@ with open('train_outputs.csv', 'r') as read_obj:
 	for row in csv_reader:
 		outputs.append(int(row[0]))
 outputs = np.array(outputs)
-svc.fit(middle_frames, outputs)
+
 results = []
 
 gnames = os.listdir("test")
 for gname in gnames:
 	path = os.path.join("test",gname)
 	frames = frameExtractor(path)
-	fvect = []
+	mindisti, mindist = 0,1000
 	for frame in frames:
+		fvect = []
 		fvect.extend(extractor.extract_feature(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))[0])
-	# mindisti, mindist = 0,1000
-	# cc=0
-	# for v in middle_frames:
-	# 	cosdist = spatial.distance.cosine(fvect,v)
-	# 	if cosdist<mindist:
-	# 		mindist = cosdist
-	# 		mindisti = cc
-	# 	cc+=1
-	# results.append([ outputs[mindisti] ])
-	results.append([ svc.predict([fvect])[0] ])
+		cc=0
+		for v in middle_frames:
+			cosdist = spatial.distance.cosine(fvect,v)
+			if cosdist<mindist:
+				mindist = cosdist
+				mindisti = cc
+			cc+=1
+	
+	results.append([ outputs[mindisti] ])
+	# results.append([ svc.predict([fvect])[0] ])
 filename = "results.csv"
 with open(filename, 'w') as csvfile: 
 	csvwriter = csv.writer(csvfile)
