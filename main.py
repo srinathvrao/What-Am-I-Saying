@@ -19,7 +19,7 @@ for gname in gnames:
 	path = os.path.join("traindata",gname)
 	frame = frameExtractor(path)
 	frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-	fvect = extractor.extract_feature(frame)[0]
+	fvect = extractor.extract_feature(frame).squeeze()
 	middle_frames.append(fvect)
 	outputs.append(c)
 	c+=1
@@ -31,7 +31,7 @@ for gname in gnames:
 	path = os.path.join("test",gname)
 	frame = frameExtractor(path)
 	frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-	fvect = extractor.extract_feature(frame)[0]
+	fvect = extractor.extract_feature(frame).squeeze()
 	cc=0
 	mindisti, mindist = 0,1000
 	for v in middle_frames:
@@ -42,7 +42,7 @@ for gname in gnames:
 		cc+=1
 	print(gname, outputs[mindisti])
 	results.append([ outputs[mindisti] ])
-	
+
 filename = "results.csv"
 with open(filename, 'w') as csvfile: 
 	csvwriter = csv.writer(csvfile)
