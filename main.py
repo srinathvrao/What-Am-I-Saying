@@ -1,5 +1,6 @@
 import cv2
 import os
+import tensorflow as tf
 from handshape_feature_extractor import HandShapeFeatureExtractor
 from frameextractor import frameExtractor
 from scipy import spatial
@@ -13,16 +14,17 @@ gnames = sorted(os.listdir("traindata/"))
 c=0
 for gname in gnames:
 	# print(gname)
+	if ".mp4" not in gname:
+		continue
 	path = os.path.join("traindata",gname)
 	frameExtractor(path,"trainframes",c)
 	img = cv2.imread("trainframes" + "/%#05d.png" % (c+1))
 	frame = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-	frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
 	fvect = extractor.extract_feature(frame).squeeze()
 	middle_frames.append(fvect)
 	c+=1
 results = []
-
+print(len(middle_frames))
 gnames = os.listdir("test/")
 c=0
 for gname in gnames:
@@ -30,7 +32,6 @@ for gname in gnames:
 	frameExtractor(path,"testframes",c)
 	img = cv2.imread("testframes" + "/%#05d.png" % (c+1))
 	frame = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-	frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
 	fvect = extractor.extract_feature(frame).squeeze()
 	cc=0
 	mindisti, mindist = 0,1e8
