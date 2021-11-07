@@ -13,13 +13,12 @@ import handshape_feature_extractor
 from handshape_feature_extractor import HandShapeFeatureExtractor
 from frameextractor import frameExtractor
 from scipy import spatial
-from sklearn.svm import SVC
 import csv
 from csv import reader
 
 middle_frames = []
 extractor = HandShapeFeatureExtractor().get_instance()
-svc = SVC(gamma='scale')
+
 ## import the handfeature extractor class
 
 # =============================================================================
@@ -43,7 +42,7 @@ for gname in gnames:
 	middle_frames.append(fvect)
 	outputs.append(c%17)
 	c+=1
-svc.fit(middle_frames,outputs)
+
 # =============================================================================
 # Get the penultimate layer for test data
 # =============================================================================
@@ -61,17 +60,16 @@ for gname in gnames:
 	frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
 	frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 	fvect = np.squeeze(extractor.extract_feature(frame))
-	# cc=0
-	# mindisti, mindist = 0,1e8
-	# for v in middle_frames:
-	# 	cosdist = spatial.distance.cosine(fvect,v)
-	# 	if cosdist<mindist:
-	# 		mindist = cosdist
-	# 		mindisti = cc
-	# 	cc+=1
-	# print(gname, outputs[mindisti])
-	# results.append([ outputs[mindisti] ])
-	results.append([ svc.predict([fvect])[0] ])
+	cc=0
+	mindisti, mindist = 0,1e8
+	for v in middle_frames:
+		cosdist = spatial.distance.cosine(fvect,v)
+		if cosdist<mindist:
+			mindist = cosdist
+			mindisti = cc
+		cc+=1
+	print(gname, outputs[mindisti])
+	results.append([ outputs[mindisti] ])
 	c+=1
 
 
