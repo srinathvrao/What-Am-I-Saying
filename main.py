@@ -46,7 +46,7 @@ with open('train_outputs.csv') as csv_file:
 '''
 for gname in gnames:
 	path = os.path.join("traindata",gname)
-	frames = frameExtractor(path,0)
+	frames = frameExtractor(path,-1)
 	for frame in frames:
 		fvect=[]
 		frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
