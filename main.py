@@ -31,16 +31,16 @@ gnames = sorted(os.listdir("traindata/"))
 outputs = []
 c=0
 gestID = {}
-for x in range(17):
-	# gestID["Num"+str(x)] = x
-	gestID[str(x)] = x
-# gestID["FanDown"] = 10
-# gestID["FanOn"] = 11
-# gestID["FanOff"] = 12
-# gestID["FanUp"] = 13
-# gestID["LightOff"] = 14
-# gestID["LightOn"] = 15
-# gestID["SetThermo"] = 16
+for x in range(10):
+	gestID["Num"+str(x)] = x
+	# gestID[str(x)] = x
+gestID["FanDown"] = 10
+gestID["FanOn"] = 11
+gestID["FanOff"] = 12
+gestID["FanUp"] = 13
+gestID["LightOff"] = 14
+gestID["LightOn"] = 15
+gestID["SetThermo"] = 16
 for gname in gnames:
 	path = os.path.join("traindata",gname)
 	impath = frameExtractor(path,"trainframes",c)
