@@ -53,7 +53,7 @@ for gname in gnames:
 			fvect=[]
 			frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
 			frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
-			frame = adjust_gamma(frame, gamma=0.4)
+			frame = adjust_gamma(frame, gamma=0.45)
 			frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 			fvect.extend(np.squeeze(extractor.extract_feature(frame)))
 			middle_frames.append(np.array(fvect))
