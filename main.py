@@ -31,6 +31,19 @@ gnames = sorted(os.listdir("traindata/"))
 outputs = []
 c=0
 
+with open('train_frames.csv') as csv_file:
+	csv_reader = csv.reader(csv_file, delimiter=',')
+	line_count = 0
+	for row in csv_reader:
+		middle_frames.append([float(x) for x in row])
+
+with open('train_outputs.csv') as csv_file:
+	csv_reader = csv.reader(csv_file, delimiter=',')
+	line_count = 0
+	for row in csv_reader:
+		outputs.append(int(row[0]))
+
+
 for gname in gnames:
 	path = os.path.join("traindata",gname)
 	frames = frameExtractor(path,"trainframes",c)

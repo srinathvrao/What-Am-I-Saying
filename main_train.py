@@ -40,18 +40,13 @@ for gname in gnames:
 	for gnameid in gnameids:
 		
 		path = "traindata/"+gname+"/"+gnameid #str(x)+"_Venkobarao.mp4"
-		frames = frameExtractor(path)
+		frames = frameExtractor(path,"fpath",0)
 		fvect=[]
 		for frame in frames:
-			# frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
-			# img_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-			# img_blur = cv2.GaussianBlur(img_gray, (3,3), 0)
-			# edges = cv2.Canny(image=img_blur, threshold1=50, threshold2=200)
-			# cv2.imshow("frame",cv2.resize(img_gray,(256,256),interpolation=cv2.INTER_AREA))
-			# cv2.waitKey(1)
-			fv = extractor.extract_feature(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))[0]
-			# fvect.append(np.array(fv).argmax(0))
-			fvect.extend(fv)
+			frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
+			frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
+			frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+			fvect.extend(np.squeeze(extractor.extract_feature(frame)))
 		outputs.append([gestID[gname]])
 		middle_frames.append(np.array(fvect))
 		print(len(frames), len(fvect))
