@@ -46,6 +46,7 @@ for gname in gnames:
 	img = cv2.imread(impath)
 	frame = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 	frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
+	frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
 	fvect = extractor.extract_feature(frame).squeeze()
 	middle_frames.append(fvect)
 	gn = gname.split("_")[0]
@@ -67,6 +68,7 @@ for gname in gnames:
 	img = cv2.imread(impath)
 	frame = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 	frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
+	frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
 	fvect = extractor.extract_feature(frame).squeeze()
 	cc=0
 	mindisti, mindist = 0,1e8
@@ -77,7 +79,7 @@ for gname in gnames:
 			mindisti = cc
 		cc+=1
 	print(gname, outputs[mindisti])
-	results.append([ 1 ])
+	results.append([ outputs[mindisti] ])
 	c+=1
 
 
