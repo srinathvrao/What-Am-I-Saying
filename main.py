@@ -48,8 +48,8 @@ for gname in gnames:
 	frame = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 	fvect = extractor.extract_feature(frame).squeeze()
 	middle_frames.append(fvect)
-	gn = gname.split("_")[0]
-	outputs.append(gestID[gn])
+	# gn = gname.split("_")[0]
+	outputs.append(c%17)
 	c+=1
 
 # =============================================================================
