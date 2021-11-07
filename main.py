@@ -38,6 +38,7 @@ for gname in gnames:
 	for frame in frames:
 		frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
 		frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
+		print(frame.shape)
 		frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 		fvect.extend(np.squeeze(extractor.extract_feature(frame)))
 	middle_frames.append(fvect)
@@ -58,7 +59,7 @@ for gname in gnames:
 	frames = frameExtractor(path,"testframes",c)
 	fvect=[]
 	for frame in frames:
-		frame = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)
+		frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
 		frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
 		frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 		fvect.extend(np.squeeze(extractor.extract_feature(frame)))
