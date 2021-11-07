@@ -36,7 +36,6 @@ for gname in gnames:
 	impath = frameExtractor(path,"trainframes",c)
 	img = cv2.imread(impath)
 	frame = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)
-	frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
 	frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 	fvect = np.squeeze(extractor.extract_feature(frame))
 	middle_frames.append(fvect)
@@ -57,7 +56,6 @@ for gname in gnames:
 	impath = frameExtractor(path,"testframes",c)
 	img = cv2.imread(impath)
 	frame = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)
-	frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
 	frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 	fvect = np.squeeze(extractor.extract_feature(frame))
 	cc=0
