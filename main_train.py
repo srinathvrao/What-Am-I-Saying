@@ -38,8 +38,6 @@ for gname in gnames:
 	gnameids = os.listdir("traindata/"+gname)
 	# for x in range(2):
 	for gnameid in gnameids:
-		if "T1" in gnameid:
-			continue
 		path = "traindata/"+gname+"/"+gnameid #str(x)+"_Venkobarao.mp4"
 		frames = frameExtractor(path,"fpath",0)
 		fvect=[]
