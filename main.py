@@ -8,7 +8,6 @@ import cv2
 import numpy as np
 import os
 import tensorflow as tf
-from sklearn.svm import SVC
 import os
 import handshape_feature_extractor 
 from handshape_feature_extractor import HandShapeFeatureExtractor
@@ -27,30 +26,63 @@ extractor = HandShapeFeatureExtractor().get_instance()
 # =============================================================================
 # your code goes here
 # Extract the middle frame of each gesture video
+'''
+gestID = {}
+for x in range(10):
+	gestID["Num"+str(x)] = x
+gestID["FanDown"] = 10
+gestID["FanOn"] = 11
+gestID["FanOff"] = 12
+gestID["FanUp"] = 13
+gestID["LightOff"] = 14
+gestID["LightOn"] = 15
+gestID["SetThermo"] = 16
 
-outputs = []
 gnames = sorted(os.listdir("traindata/"))
+outputs = []
 c=0
 for gname in gnames:
 	path = os.path.join("traindata",gname)
-	impath = frameExtractor(path,"trainframes",c)
-	print(impath)
-	img = cv2.imread(impath)
-	frame = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-	fvect = extractor.extract_feature(frame).squeeze()
-	middle_frames.append(fvect)
-	outputs.append(c)
+	gfiles = os.listdir(path)
+	print(gname)
+	for gfile in gfiles:
+		gpath = os.path.join("traindata",gname,gfile)
+		impath = frameExtractor(gpath,"trainframes",c)
+		outputs.append([gestID[gname]])
+		img = cv2.imread(impath)
+		frame = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+		fvect = extractor.extract_feature(frame).squeeze()
+		middle_frames.append(fvect)
 	c+=1
 results = []
-svc = SVC(gamma='scale')
-svc.fit(middle_frames,outputs)
+
+filename = "trainData.csv"
+with open(filename, 'w') as csvfile:
+	csvwriter = csv.writer(csvfile)
+	csvwriter.writerows(middle_frames)
+filename = "trainOutputs.csv"
+with open(filename, 'w') as csvfile:
+	csvwriter = csv.writer(csvfile)
+	csvwriter.writerows(outputs)
+'''
 # =============================================================================
 # Get the penultimate layer for test data
 # =============================================================================
 # your code goes here 
 # Extract the middle frame of each gesture video
+trainData = []
+with open("trainData.csv",'r') as csv_file:
+	csv_reader = csv.reader(csv_file, delimiter=',')
+	for row in csv_reader:
+		trainData.append([float(x) for x in row])
 
+trainOutputs = []
+with open("trainOutputs.csv",'r') as csv_file:
+	csv_reader = csv.reader(csv_file, delimiter=',')
+	for row in csv_reader:
+		trainOutputs.extend([int(x) for x in row])
 
+results = []
 gnames = os.listdir("test/")
 c=0
 for gname in gnames:
@@ -59,16 +91,16 @@ for gname in gnames:
 	img = cv2.imread(impath)
 	frame = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 	fvect = extractor.extract_feature(frame).squeeze()
-	# cc=0
-	# mindisti, mindist = 0,1e8
-	# for v in middle_frames:
-	# 	cosdist = spatial.distance.cosine(fvect,v)
-	# 	if cosdist<mindist:
-	# 		mindist = cosdist
-	# 		mindisti = cc
-	# 	cc+=1
-	# print(gname, mindisti)
-	results.append([ svc.predict([fvect])[0] ])
+	cc=0
+	mindisti, mindist = 0,1e8
+	for v in trainData:
+		cosdist = spatial.distance.cosine(fvect,v)
+		if cosdist<mindist:
+			mindist = cosdist
+			mindisti = cc
+		cc+=1
+	print(gname, trainOutputs[mindisti])
+	results.append([ trainOutputs[mindisti] ])
 	c+=1
 
 
