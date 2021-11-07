@@ -48,12 +48,12 @@ for gname in gnames:
 	# for x in range(2):
 	for gnameid in gnameids:
 		path = "traindata/"+gname+"/"+gnameid #str(x)+"_Venkobarao.mp4"
-		frames = frameExtractor(path,"fpath",0)
+		frames = frameExtractor(path,-1)
 		for frame in frames:
 			fvect=[]
 			frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
 			frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
-			frame = adjust_gamma(frame, gamma=0.45)
+			# frame = adjust_gamma(frame, gamma=0.45)
 			frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 			fvect.extend(np.squeeze(extractor.extract_feature(frame)))
 			middle_frames.append(np.array(fvect))
