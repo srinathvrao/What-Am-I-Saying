@@ -77,7 +77,7 @@ for gname in gnames:
 			mindisti = cc
 		cc+=1
 	print(gname, outputs[mindisti])
-	results.append([ outputs[mindisti] ])
+	results.append([ 1 ])
 	c+=1
 
 
