@@ -49,7 +49,7 @@ for gname in gnames:
 	fvect = extractor.extract_feature(frame).squeeze()
 	middle_frames.append(fvect)
 	gn = gname.split("_")[0]
-	outputs.append([c%17])
+	outputs.append(gestID[gn])
 	c+=1
 
 # =============================================================================
