@@ -87,7 +87,7 @@ for gname in gnames:
 	for frame in frames[:1]:
 		frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
 		frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
-		frame = increase_brightness(frame,value=50)
+		frame = increase_brightness(frame,value=30)
 		frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 		fvect.extend(np.squeeze(extractor.extract_feature(frame)))
 	cc=0
