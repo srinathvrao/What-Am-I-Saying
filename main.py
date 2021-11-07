@@ -35,8 +35,10 @@ for gname in gnames:
 	path = os.path.join("traindata",gname)
 	impath = frameExtractor(path,"trainframes",c)
 	img = cv2.imread(impath)
-	frame = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-	fvect = extractor.extract_feature(frame).squeeze()
+	frame = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)
+	frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
+	frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+	fvect = np.squeeze(extractor.extract_feature(frame))
 	middle_frames.append(fvect)
 	outputs.append(c%17)
 	c+=1
@@ -48,14 +50,16 @@ for gname in gnames:
 # Extract the middle frame of each gesture video
 
 results = []
-gnames = os.listdir("test/")
+gnames = sorted(os.listdir("test/"))
 c=0
 for gname in gnames:
 	path = os.path.join("test",gname)
 	impath = frameExtractor(path,"testframes",c)
 	img = cv2.imread(impath)
-	frame = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-	fvect = extractor.extract_feature(frame).squeeze()
+	frame = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)
+	frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
+	frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+	fvect = np.squeeze(extractor.extract_feature(frame))
 	cc=0
 	mindisti, mindist = 0,1e8
 	for v in middle_frames:
