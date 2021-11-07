@@ -31,9 +31,8 @@ gnames = sorted(os.listdir("traindata/"))
 outputs = []
 c=0
 gestID = {}
-for x in range(10):
+for x in range(17):
 	gestID["Num"+str(x)] = x
-	# gestID[str(x)] = x
 gestID["FanDown"] = 10
 gestID["FanOn"] = 11
 gestID["FanOff"] = 12
@@ -46,9 +45,10 @@ for gname in gnames:
 	impath = frameExtractor(path,"trainframes",c)
 	img = cv2.imread(impath)
 	frame = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+	frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
 	fvect = extractor.extract_feature(frame).squeeze()
 	middle_frames.append(fvect)
-	# gn = gname.split("_")[0]
+	gn = gname.split("_")[0]
 	outputs.append(c%17)
 	c+=1
 
@@ -66,6 +66,7 @@ for gname in gnames:
 	impath = frameExtractor(path,"testframes",c)
 	img = cv2.imread(impath)
 	frame = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+	frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
 	fvect = extractor.extract_feature(frame).squeeze()
 	cc=0
 	mindisti, mindist = 0,1e8
