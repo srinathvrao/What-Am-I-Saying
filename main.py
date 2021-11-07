@@ -47,14 +47,14 @@ with open('train_outputs.csv') as csv_file:
 for gname in gnames:
 	path = os.path.join("traindata",gname)
 	frames = frameExtractor(path,"trainframes",c)
-	fvect=[]
 	for frame in frames:
+		fvect=[]
 		frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
 		frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
 		frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 		fvect.extend(np.squeeze(extractor.extract_feature(frame)))
-	middle_frames.append(fvect)
-	outputs.append(c%17)
+		middle_frames.append(fvect)
+		outputs.append(c%17)
 	c+=1
 
 # =============================================================================
@@ -70,7 +70,7 @@ for gname in gnames:
 	path = os.path.join("test",gname)
 	frames = frameExtractor(path,"testframes",c)
 	fvect=[]
-	for frame in frames:
+	for frame in frames[:1]:
 		frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
 		frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
 		frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
