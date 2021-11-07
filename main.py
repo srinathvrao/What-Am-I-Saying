@@ -30,7 +30,7 @@ extractor = HandShapeFeatureExtractor().get_instance()
 gnames = sorted(os.listdir("traindata/"))
 outputs = []
 c=0
-
+'''
 with open('train_frames.csv') as csv_file:
 	csv_reader = csv.reader(csv_file, delimiter=',')
 	line_count = 0
@@ -43,10 +43,10 @@ with open('train_outputs.csv') as csv_file:
 	for row in csv_reader:
 		outputs.append(int(row[0]))
 
-
+'''
 for gname in gnames:
 	path = os.path.join("traindata",gname)
-	frames = frameExtractor(path,"trainframes",c)
+	frames = frameExtractor(path,0)
 	for frame in frames:
 		fvect=[]
 		frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
@@ -69,9 +69,9 @@ c=0
 
 for gname in gnames:
 	path = os.path.join("test",gname)
-	frames = frameExtractor(path,"testframes",c)
+	frames = frameExtractor(path,-1)
 	fvect=[]
-	for frame in frames[:1]:
+	for frame in frames:
 		frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
 		frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
 		frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
