@@ -30,7 +30,7 @@ extractor = HandShapeFeatureExtractor().get_instance()
 gnames = sorted(os.listdir("traindata/"))
 outputs = []
 c=0
-
+'''
 with open('train_frames.csv') as csv_file:
 	csv_reader = csv.reader(csv_file, delimiter=',')
 	line_count = 0
@@ -42,7 +42,7 @@ with open('train_outputs.csv') as csv_file:
 	line_count = 0
 	for row in csv_reader:
 		outputs.append(int(row[0]))
-
+'''
 
 for gname in gnames:
 	path = os.path.join("traindata",gname)
@@ -67,19 +67,6 @@ results = []
 gnames = sorted(os.listdir("test/"))
 c=0
 
-def increase_brightness(img, value=30):
-    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-    h, s, v = cv2.split(hsv)
-
-    lim = 255 - value
-    v[v > lim] = 255
-    v[v <= lim] += value
-
-    final_hsv = cv2.merge((h, s, v))
-    img = cv2.cvtColor(final_hsv, cv2.COLOR_HSV2BGR)
-    return img
-
-
 for gname in gnames:
 	path = os.path.join("test",gname)
 	frames = frameExtractor(path,"testframes",c)
@@ -87,7 +74,6 @@ for gname in gnames:
 	for frame in frames[:1]:
 		frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
 		frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
-		# frame = increase_brightness(frame,value=20)
 		frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 		fvect.extend(np.squeeze(extractor.extract_feature(frame)))
 	cc=0
