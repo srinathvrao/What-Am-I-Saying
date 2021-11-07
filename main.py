@@ -58,7 +58,7 @@ for gname in gnames:
 # Extract the middle frame of each gesture video
 
 results = []
-gnames = sorted(os.listdir("test/"))
+gnames = os.listdir("test/")
 c=0
 for gname in gnames:
 	path = os.path.join("test",gname)
