@@ -30,16 +30,7 @@ extractor = HandShapeFeatureExtractor().get_instance()
 gnames = sorted(os.listdir("traindata/"))
 outputs = []
 c=0
-gestID = {}
-for x in range(17):
-	gestID["Num"+str(x)] = x
-gestID["FanDown"] = 10
-gestID["FanOn"] = 11
-gestID["FanOff"] = 12
-gestID["FanUp"] = 13
-gestID["LightOff"] = 14
-gestID["LightOn"] = 15
-gestID["SetThermo"] = 16
+
 for gname in gnames:
 	path = os.path.join("traindata",gname)
 	impath = frameExtractor(path,"trainframes",c)
@@ -47,7 +38,6 @@ for gname in gnames:
 	frame = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 	fvect = extractor.extract_feature(frame).squeeze()
 	middle_frames.append(fvect)
-	gn = gname.split("_")[0]
 	outputs.append(c%17)
 	c+=1
 
